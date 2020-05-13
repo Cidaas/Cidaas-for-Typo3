@@ -1,0 +1,43 @@
+OidcAuth = PAGE
+OidcAuth {
+    typeNum = 1489657462
+    config {
+        xhtml_cleaning = 0
+        disableAllHeaderCode = 1
+        admPanel = 0
+    }
+    headerData >
+    10 = USER_INT
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        vendorName = Widas
+        extensionName = Cidaas
+        pluginName = Pi1
+        controller = Authentication
+        switchableControllerActions {
+            Authentication {
+                1 = connect
+            }
+        }
+    }
+}
+
+# format is "TYPO3 column" = <OIDC field>
+plugin.tx_oidc.mapping {
+    fe_users {
+        username   = <sub>
+        name       = <name>
+        first_name = <given_name>
+        last_name  = <family_name>
+        address    = <street_address>
+        title      = <title>
+        zip        = <postal_code>
+        city       = <locality>
+        country    = <country>
+    }
+}
+
+plugin.tx_oidc_login {
+    userFunc = Widas\Cidaas\Controller\LoginController->login
+    defaultRedirectPid =
+}
