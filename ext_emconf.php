@@ -27,5 +27,5 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Gopi Mallela',
     'author_email' => 'gopi.mallela@widas.in',
     'author_company' => 'Widas Concepts',
-    'version' => '1.0.2',
+    'version' => '1.0.3',
 ];
