@@ -5,7 +5,7 @@
  */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Cidaas For Typo3',
-    'description' => 'This extension allows you to log into a TYPO3 frontend via Cidaas. Cidaas stands for “Customer Identity as a Service” and delivers an out-of-the-box solution for standardized Access control and Identity management. Based on OAuth 2.0 and OpenID Connect Standards, the cidaas software can been seamlessly integrated into your business.',
+    'description' => 'If you would like to use a secure, scalable Identity and Access Management System along with Typo3, look no further.  This Extension allows you to use Cidaas as your Cloud based Identity System. You can have Cidaas perform Authentication and Authorization and access your TYPO3 frontend. Cidaas supports all standard protocols like OAuth 2.0 and OpenID Connect Standards. With easy to integrate SDK you should be able to secure your favourite Typo3 instance in no time!',
     'category' => 'services',
     'constraints' => [
         'depends' => [
@@ -27,5 +27,5 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Gopi Mallela',
     'author_email' => 'gopi.mallela@widas.in',
     'author_company' => 'Widas Concepts',
-    'version' => '1.0.1',
+    'version' => '1.0.2',
 ];
