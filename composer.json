@@ -1,7 +1,7 @@
 {
     "name": "cidaas/cidaas-for-typo3",
     "type" : "typo3-cms-extension",
-    "description": "This extension uses Cidaas identity server to authenticate users.",
+    "description": "If you would like to use a secure, scalable Identity and Access Management System along with Typo3, look no further. This Extension allows you to use Cidaas as your Cloud based Identity System. You can have Cidaas perform Authentication and Authorization and access your TYPO3 frontend. Cidaas supports all standard protocols like OAuth 2.0 and OpenID Connect Standards. With easy to integrate SDK you should be able to secure your favourite Typo3 instance in no time!",
    "keywords": [
     "TYPO3 CMS",
     "OpenID",
@@ -31,11 +31,12 @@
       "Widas\\Cidaas\\": "Classes/"
     }
   },
+    
     "config": {
     "vendor-dir": ".Build/vendor",
     "bin-dir": ".Build/bin"
   },
-  "scripts": {
+  "scripts": { 
     "post-autoload-dump": [
       "mkdir -p .Build/Web/typo3conf/ext/",
       "[ -L .Build/Web/typo3conf/ext/cidaas ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/cidaas"
@@ -59,8 +60,10 @@
     ],
     "extension-clean": [
       "rm -rf Libraries"
-    ],
-      "typo3/cms": {
+    ]
+    },
+    "extra": {
+    "typo3/cms": {
       "extension-key": "cidaas",
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "web-dir": ".Build/Web"
