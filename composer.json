@@ -31,11 +31,12 @@
       "Widas\\Cidaas\\": "Classes/"
     }
   },
+    
     "config": {
     "vendor-dir": ".Build/vendor",
     "bin-dir": ".Build/bin"
   },
-  "scripts": {
+  "scripts": { 
     "post-autoload-dump": [
       "mkdir -p .Build/Web/typo3conf/ext/",
       "[ -L .Build/Web/typo3conf/ext/cidaas ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/cidaas"
@@ -59,9 +60,11 @@
     ],
     "extension-clean": [
       "rm -rf Libraries"
-    ],
-      "typo3/cms": {
-      "extension-key": "cidaas",
+    ]
+    },
+    "extra": {
+    "typo3/cms": {
+      "extension-key": "oidc",
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "web-dir": ".Build/Web"
     }
