@@ -79,7 +79,6 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
      */
     public function getUser()
     {
-        static::getLogger()->debug('get user');
         $user = false;
         $params = GeneralUtility::_GET('tx_oidc');
         $code = isset($params['code']) ? $params['code'] : null;
@@ -172,6 +171,26 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
         return $user;
     }
 
+// Flattens the OIDC array to remove nested fields
+ protected function array_flatten($array, $prefix = '')
+{
+
+   $result = array();   
+     
+foreach($array as $key=>$value) {
+     
+        if(is_array($value) && $key !== "roles") {
+            
+            $result = $result + $this->array_flatten($value);
+            
+        }
+        else {
+            $result[$key] = $value;
+        }
+    }
+    return $result;
+}
+
     /**
      * Looks up a TYPO3 user from an access token.
      *
@@ -185,6 +204,7 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
         try {
             static::getLogger()->debug('Retrieving resource owner');
             $resourceOwner = $service->getResourceOwner($accessToken)->toArray();
+            $resourceOwner = $this->array_flatten($resourceOwner);
             static::getLogger()->debug('Resource owner retrieved', $resourceOwner);
         } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
             static::getLogger()->error('Could not retrieve resource owner', [
@@ -342,12 +362,9 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
                 )
                 ->execute()
                 ->fetchAll();
-            static::getLogger()->debug('Roles retrieved', $typo3Roles);
             //$roles = GeneralUtility::trimExplode(',', $info['roles'], true);
             $roles = ',' . implode(',', $info['roles']) . ',';
-            static::getLogger()->debug('fine too');
             static::getLogger()->debug('Roles retrieved', $info['roles']);
-            static::getLogger()->info('Roles are', ['url' => $roles]);
             foreach ($typo3Roles as $typo3Role) {
                 // Convert the pattern into a proper regular expression
                 $subpatterns = GeneralUtility::trimExplode('|', $typo3Role['tx_oidc_pattern'], true);
@@ -358,9 +375,7 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
                     $subpatterns[$k] = $pattern;
                 }
                 $pattern = '/,(' . implode('|', $subpatterns) . '),/i';
-                static::getLogger()->info('patterns are', ['url' => $pattern]);
                 if (preg_match($pattern, $roles)) {
-                    static::getLogger()->debug('matched');
                     $newUserGroups[] = (int)$typo3Role['uid'];
                 }
             }
