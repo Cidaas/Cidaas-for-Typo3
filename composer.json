@@ -31,9 +31,6 @@
       "Widas\\Cidaas\\": "Classes/"
     }
   },
-    "replace": {
-    "typo3-ter/cidaas": "self.version"
-  },
     "config": {
     "vendor-dir": ".Build/vendor",
     "bin-dir": ".Build/bin"
