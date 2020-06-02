@@ -14,10 +14,9 @@
   },
     "authors": [
     {
-      "name": "Gopi Mallela",
-      "email": "gopi.mallela@widas.in",
-      "homepage": "https://www.cidaas.com",
-      "role": "Developer"
+      "name": "cidaas by Widas ID GmbH",
+      "email": "developer@widas.de",
+      "homepage": "https://www.cidaas.com"
     }
   ],
   "license": "GPL-2.0-or-later",
