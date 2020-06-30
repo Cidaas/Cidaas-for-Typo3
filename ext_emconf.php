@@ -24,8 +24,8 @@ $EM_CONF[$_EXTKEY] = [
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'author' => 'Gopi Mallela',
-    'author_email' => 'gopi.mallela@widas.in',
+    'author' => 'cidaas by Widas ID GmbH',
+    'author_email' => 'developer@cidaas.de',
     'author_company' => 'Widas Concepts',
-    'version' => '1.0.4',
+    'version' => '1.0.5',
 ];
