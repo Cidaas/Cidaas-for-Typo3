@@ -20,7 +20,7 @@ $EM_CONF[$_EXTKEY] = [
             'Widas\\Cidaas\\' => 'Classes',
         ],
     ],
-    'state' => 'beta',
+    'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
