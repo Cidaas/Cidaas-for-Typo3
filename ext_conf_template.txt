@@ -1,53 +1,108 @@
-# cat=basic/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.enableFrontendAuthentication
+# cat=Client_A/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.enableFrontendAuthentication
 enableFrontendAuthentication = 1
 
-# cat=basic/enable/2; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.reEnableFrontendUsers
+# cat=Client_A/enable/2; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.reEnableFrontendUsers
 reEnableFrontendUsers = 1
 
-# cat=basic/enable/3; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.undeleteFrontendUsers
+# cat=Client_A/enable/3; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.undeleteFrontendUsers
 undeleteFrontendUsers = 1
 
-# cat=basic/enable/4; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.frontendUserMustExistLocally
+# cat=Client_A/enable/4; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.frontendUserMustExistLocally
 frontendUserMustExistLocally = 0
 
-# cat=basic//1; type=int; label=Storage Pid: The Storage Pid of the Page, where the fe_users should be stored
+# cat=Client_A//1; type=int; label=Storage Pid: The Storage Pid of the Page, where the fe_users should be stored
 usersStoragePid =
 
-# cat=basic//2; type=string; label=Default user group(s) (comma-separated list of UIDs)
+# cat=Client_A//2; type=string; label=Default user group(s) (comma-separated list of UIDs)
 usersDefaultGroup =
 
-# cat=basic//3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientKey
+# cat=Client_A//3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientKey
 oidcClientKey =
 
-# cat=basic//4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientSecret
+# cat=Client_A//4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientSecret
 oidcClientSecret =
 
-# cat=basic//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
+# cat=Client_A//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
 oidcClientScopes = openid email profile roles
 
-# cat=advanced/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
+# cat=Client_A/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
 oidcEndpointAuthorize = https://nightlybuild.cidaas.de/authz-srv/authz
 
-# cat=advanced/links/2; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
+# cat=Client_A/links/2; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
 oidcEndpointToken = https://nightlybuild.cidaas.de/token-srv/token
 
-# cat=advanced/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
+# cat=Client_A/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
 oidcEndpointUserInfo = https://nightlybuild.cidaas.de/users-srv/userinfo
 
-# cat=advanced/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
+# cat=Client_A/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
 oidcEndpointLogout = https://nightlybuild.cidaas.de/session/end_session
 
-# cat=advanced/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
+# cat=Client_A/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
 oidcEndpointRevoke = https://nightlybuild.cidaas.de/token-srv/revoke
 
-# cat=advanced/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcAuthorizeLanguageParameter
+# cat=Client_A/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcAuthorizeLanguageParameter
 oidcAuthorizeLanguageParameter = language
 
-# cat=advanced/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcUseRequestPathAuthentication
+# cat=Client_A/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcUseRequestPathAuthentication
 oidcUseRequestPathAuthentication = 0
 
-# cat=advanced/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.revokeAccessTokenAfterLogin
+# cat=Client_A/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.revokeAccessTokenAfterLogin
 oidcRevokeAccessTokenAfterLogin = 0
 
-# cat=advanced/enable/2; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcDisableCSRFProtection
+# cat=Client_A/enable/2; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcDisableCSRFProtection
 oidcDisableCSRFProtection = 0
+
+
+# cat=Client_B/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.enableFrontendAuthentication
+enableFrontendAuthentication_b = 1
+
+# cat=Client_B/enable/2; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.reEnableFrontendUsers
+reEnableFrontendUsers_b = 1
+
+# cat=Client_B/enable/3; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.undeleteFrontendUsers
+undeleteFrontendUsers_b = 1
+
+# cat=Client_B/enable/4; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.frontendUserMustExistLocally
+frontendUserMustExistLocally_b = 0
+
+# cat=Client_B//1; type=int; label=Storage Pid: The Storage Pid of the Page, where the fe_users should be stored
+usersStoragePid_b =
+
+# cat=Client_B//2; type=string; label=Default user group(s) (comma-separated list of UIDs)
+usersDefaultGroup_b =
+
+# cat=Client_B//3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientKey
+oidcClientKey_b =
+
+# cat=Client_B//4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientSecret
+oidcClientSecret_b =
+
+# cat=Client_B//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
+oidcClientScopes_b = openid email profile roles
+
+# cat=Client_B/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
+oidcEndpointAuthorize_b = https://nightlybuild.cidaas.de/authz-srv/authz
+
+# cat=Client_B/links/2; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
+oidcEndpointToken_b = https://nightlybuild.cidaas.de/token-srv/token
+
+# cat=Client_B/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
+oidcEndpointUserInfo_b = https://nightlybuild.cidaas.de/users-srv/userinfo
+
+# cat=Client_B/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
+oidcEndpointLogout_b = https://nightlybuild.cidaas.de/session/end_session
+
+# cat=Client_B/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
+oidcEndpointRevoke_b = https://nightlybuild.cidaas.de/token-srv/revoke
+
+# cat=Client_B/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcAuthorizeLanguageParameter
+oidcAuthorizeLanguageParameter_b = language
+
+# cat=Client_B/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcUseRequestPathAuthentication
+oidcUseRequestPathAuthentication_b = 0
+
+# cat=Client_B/enable/1; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.revokeAccessTokenAfterLogin
+oidcRevokeAccessTokenAfterLogin_b = 0
+
+# cat=Client_B/enable/2; type=boolean; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcDisableCSRFProtection
+oidcDisableCSRFProtection_b = 0

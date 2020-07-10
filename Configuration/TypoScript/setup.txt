@@ -22,6 +22,8 @@ OidcAuth {
     }
 }
 
+
+
 # format is "TYPO3 column" = <OIDC field>
 plugin.tx_oidc.mapping {
     fe_users {
@@ -41,3 +43,9 @@ plugin.tx_oidc_login {
     userFunc = Widas\Cidaas\Controller\LoginController->login
     defaultRedirectPid =
 }
+
+plugin.tx_oidc2_login {
+    userFunc = Widas\Cidaas\Controller\Login2Controller->login
+    defaultRedirectPid =
+}
+

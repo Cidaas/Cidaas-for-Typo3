@@ -112,7 +112,13 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
         static::getLogger()->debug('Initializing OpenID Connect service');
 
         /** @var OAuthService $service */
-        $service = GeneralUtility::makeInstance(OAuthService::class);
+        if(!empty($_GET['client'])){
+        $service = GeneralUtility::makeInstance(OAuthService2::class);
+        }
+        else {
+        $service = GeneralUtility::makeInstance(OAuthService::class); 
+        }
+
         $service->setSettings($this->config);
 
         // Try to get an access token using the authorization code grant
@@ -128,7 +134,9 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
             ]);
             return false;
         }
-
+        if(!empty($_GET['client']))
+        $user = $this->getUserFromAccessToken2($service, $accessToken);
+        else
         $user = $this->getUserFromAccessToken($service, $accessToken);
         return $user;
     }
@@ -230,6 +238,46 @@ foreach($array as $key=>$value) {
         return $user;
     }
 
+
+    /**
+     * Looks up a TYPO3 user from an access token.
+     *
+     * @param OAuthService $service
+     * @param AccessToken $accessToken
+     * @return array|bool
+     */
+    protected function getUserFromAccessToken2(OAuthService2 $service, AccessToken $accessToken)
+    {
+        // Using the access token, we may look up details about the resource owner
+        try {
+            static::getLogger()->debug('Retrieving resource owner');
+            $resourceOwner = $service->getResourceOwner($accessToken)->toArray();
+            $resourceOwner = $this->array_flatten($resourceOwner);
+            static::getLogger()->debug('Resource owner retrieved', $resourceOwner);
+        } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+            static::getLogger()->error('Could not retrieve resource owner', [
+                'message' => $e->getMessage(),
+            ]);
+            return false;
+        }
+        if (empty($resourceOwner['sub'])) {
+            static::getLogger()->error('No "sub" found in resource owner, revoking access token');
+            $service->revokeToken($accessToken);
+            throw new \RuntimeException(
+                'Resource owner does not have a sub part: ' . json_encode($resourceOwner)
+                . '. Your access token has been revoked. Please try again.',
+                1490086626
+            );
+        }
+        $user = $this->convertResourceOwner($resourceOwner);
+
+        if ($this->config['oidcRevokeAccessTokenAfterLogin']) {
+            $service->revokeToken($accessToken);
+        }
+
+        return $user;
+    }
+
     /**
      * Authenticates a user
      *
@@ -275,10 +323,17 @@ foreach($array as $key=>$value) {
             )
             ->execute()
             ->fetch();
-
+        if(!empty($_GET['client'])) {
+        $reEnableUser = (bool)$this->config['reEnableFrontendUsers_b'];
+        $undeleteUser = (bool)$this->config['undeleteFrontendUsers_b'];
+        $frontendUserMustExistLocally = (bool)$this->config['frontendUserMustExistLocally_b'];
+    }
+        else {
         $reEnableUser = (bool)$this->config['reEnableFrontendUsers'];
         $undeleteUser = (bool)$this->config['undeleteFrontendUsers'];
         $frontendUserMustExistLocally = (bool)$this->config['frontendUserMustExistLocally'];
+
+        }
 
         if (!empty($row) && (bool)$row['deleted'] && !$undeleteUser) {
             // User was manually deleted, it should not get automatically restored
@@ -316,7 +371,12 @@ foreach($array as $key=>$value) {
         );
 
         $newUserGroups = [];
-        $defaultUserGroups = GeneralUtility::intExplode(',', $this->config['usersDefaultGroup'], true);
+        if(!empty($_GET['client'])) {
+        $defaultUserGroups = GeneralUtility::intExplode(',', $this->config['usersDefaultGroup_b'], true);
+    }
+        else{
+        $defaultUserGroups = GeneralUtility::intExplode(',', $this->config['usersDefaultGroup'], true);  
+        }  
 
         if (!empty($row)) {
             $currentUserGroups = GeneralUtility::intExplode(',', $row['usergroup'], true);
@@ -407,8 +467,12 @@ foreach($array as $key=>$value) {
             }
         } else {    // fe_users record does not already exist => create it
             static::getLogger()->info('New user detected, creating a TYPO3 user');
+            if(!empty($_GET['client']))
+            $storagepid = $this->config['usersStoragePid_b'];
+            else
+            $storagepid = $this->config['usersStoragePid'];    
             $data = array_merge($data, [
-                'pid' => $this->config['usersStoragePid'],
+                'pid' => $storagepid,
                 'usergroup' => implode(',', $newUserGroups),
                 'crdate' => $GLOBALS['EXEC_TIME'],
                 'tx_oidc' => $info['sub'],
