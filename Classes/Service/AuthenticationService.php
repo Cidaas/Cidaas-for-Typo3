@@ -640,7 +640,7 @@ foreach($array as $key=>$value) {
                 preg_match_all('/<(.+?)>/', $sectionValue, $matches);
 
                 foreach ($matches[0] as $index => $fullMatchedMarker) {
-                    $oidcProperty = strtolower($matches[1][$index]);
+                    $oidcProperty = $matches[1][$index];
 
                     if (isset($oidc[$oidcProperty])) {
                         $oidcValue = $oidc[$oidcProperty];
