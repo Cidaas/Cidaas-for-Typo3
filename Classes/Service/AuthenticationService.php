@@ -229,7 +229,7 @@ foreach($array as $key=>$value) {
                 1490086626
             );
         }
-        $user = $this->convertResourceOwner($resourceOwner);
+        $user = $this->convertResourceOwner($resourceOwner, $accessToken);
 
         if ($this->config['oidcRevokeAccessTokenAfterLogin']) {
             $service->revokeToken($accessToken);
@@ -302,7 +302,7 @@ foreach($array as $key=>$value) {
      * @return array|bool
      * @throws \InvalidArgumentException
      */
-    protected function convertResourceOwner(array $info)
+    protected function convertResourceOwner(array $info, AccessToken $accessToken)
     {
         if (TYPO3_MODE === 'FE') {
             $userTable = 'fe_users';
@@ -358,7 +358,7 @@ foreach($array as $key=>$value) {
         $objInstanceSaltedPW = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(null, TYPO3_MODE);
         $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$'), 0, 20);
         $hashedPassword = $objInstanceSaltedPW->getHashedPassword($password);
-
+        $accessToken = $accessToken->jsonSerialize();
         $data = $this->applyMapping(
             $userTable,
             $info,
@@ -367,6 +367,7 @@ foreach($array as $key=>$value) {
                 'password' => $hashedPassword,
                 'deleted' => 0,
                 'disable' => 0,
+                'access_token' => $accessToken['access_token'],
             ]
         );
 
@@ -476,6 +477,7 @@ foreach($array as $key=>$value) {
                 'usergroup' => implode(',', $newUserGroups),
                 'crdate' => $GLOBALS['EXEC_TIME'],
                 'tx_oidc' => $info['sub'],
+                'access_token' => $accessToken['access_token'],
             ]);
             $tableConnection->insert(
                 $userTable,

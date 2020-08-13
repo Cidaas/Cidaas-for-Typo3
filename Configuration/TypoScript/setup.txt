@@ -49,3 +49,12 @@ plugin.tx_oidc2_login {
     defaultRedirectPid =
 }
 
+plugin.tx_oidc_logout {
+    userFunc = Widas\Cidaas\Controller\LoginController->logout
+    defaultRedirectPid =
+}
+
+plugin.tx_oidc2_logout {
+    userFunc = Widas\Cidaas\Controller\Login2Controller->logout
+    defaultRedirectPid =
+}

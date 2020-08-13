@@ -19,3 +19,21 @@ defined('TYPO3_MODE') or die('Access denied');
     'list_type',
     'oidc2'
 );
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+    [
+        'LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:tt_content.oidc_logout',
+        'oidc_logout',
+    ],
+    'list_type',
+    'oidc'
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+    [
+        'LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:tt_content.oidc2_logout',
+        'oidc2_logout',
+    ],
+    'list_type',
+    'oidc2'
+);

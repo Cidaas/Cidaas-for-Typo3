@@ -18,6 +18,11 @@ namespace Widas\Cidaas\Controller;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
 
 class Login2Controller
 {
@@ -115,5 +120,48 @@ class Login2Controller
         }
 
         return '/';
+    }
+
+    public function logout($_ = '', $pluginConfiguration)
+    {
+        if (is_array($pluginConfiguration)) {
+            $this->pluginConfiguration = $pluginConfiguration;
+        }
+
+
+        $this->performRedirectToLogout();
+    }
+
+    protected function performRedirectToLogout()
+    {
+
+        if (session_id() === '') {
+            session_start();
+        }
+        $logoutUrl = $this->settings['oidcEndpointLogout_b'];
+        
+
+        $user = $GLOBALS['TSFE']->fe_user->user['uid'];
+                $userTable = 'fe_users';
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable($userTable);
+        $queryBuilder->getRestrictions()->removeAll();
+        $row = $queryBuilder
+            ->select('*')
+            ->from($userTable)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($user, \PDO::PARAM_STR))
+            )
+            ->execute()
+            ->fetch();
+
+            // .'&post_logout_redirect_uri=http://localhost/index.php?logintype=logout'
+        //HttpUtility::redirect($logoutUrl);
+        $token = $row['access_token'];
+        $url = $this->settings['baseUrl_b'];
+        $logoutUrl .= '?access_token_hint='.$token.'&post_logout_redirect_uri='.$url.'index.php?logintype=logout';
+
+        HttpUtility::redirect($logoutUrl);
+
     }
 }

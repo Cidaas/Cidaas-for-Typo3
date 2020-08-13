@@ -9,7 +9,12 @@
 			<trans-unit id="tt_content.oidc2_login">
 				<source>Client Login 2</source>
 			</trans-unit>
-
+			<trans-unit id="tt_content.oidc_logout">
+				<source>Client Logout 1</source>
+			</trans-unit>
+			<trans-unit id="tt_content.oidc2_logout">
+				<source>Client Logout 2</source>
+			</trans-unit>
 			<trans-unit id="settings.enableFrontendAuthentication">
 				<source>Frontend Authentication: Enable OpenID Connect authentication for the frontend.</source>
 			</trans-unit>
@@ -33,6 +38,9 @@
 			</trans-unit>">
 			<trans-unit id="settings.oidcAuthorizeLanguageParameter">
 				<source>Authorize request language parameter name</source>
+			</trans-unit>
+			<trans-unit id="settings.baseUrl">
+				<source>BaseUrl of the website</source>
 			</trans-unit>
 			<trans-unit id="settings.oidcEndpointAuthorize">
 				<source>Endpoint URI for authorization</source>
@@ -63,6 +71,9 @@
 			</trans-unit>
 			<trans-unit id="fe_users.tx_oidc">
 				<source>OpenID Connect Identifier</source>
+			</trans-unit>
+			<trans-unit id="fe_users.access_token">
+				<source>Cidaas Access Token</source>
 			</trans-unit>
 		</body>
 	</file>

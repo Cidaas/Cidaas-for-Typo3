@@ -25,6 +25,9 @@ oidcClientSecret =
 # cat=Client_A//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
 oidcClientScopes = openid email profile roles
 
+# cat=Client_A/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.baseUrl
+baseUrl = http://localhost/
+
 # cat=Client_A/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
 oidcEndpointAuthorize = https://nightlybuild.cidaas.de/authz-srv/authz
 
@@ -79,6 +82,9 @@ oidcClientSecret_b =
 
 # cat=Client_B//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
 oidcClientScopes_b = openid email profile roles
+
+# cat=Client_B/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.baseUrl
+baseUrl_b = http://localhost/
 
 # cat=Client_B/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
 oidcEndpointAuthorize_b = https://nightlybuild.cidaas.de/authz-srv/authz
