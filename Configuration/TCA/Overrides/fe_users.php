@@ -22,7 +22,7 @@ $tempColumns = [
         'label' => 'LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:fe_users.access_token',
         'config' => [
             'type' => 'input',
-            'size' => 1000,
+            'size' => 1600,
         ]
     ],
 ];
