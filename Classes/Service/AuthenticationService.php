@@ -269,7 +269,7 @@ foreach($array as $key=>$value) {
                 1490086626
             );
         }
-        $user = $this->convertResourceOwner($resourceOwner);
+        $user = $this->convertResourceOwner($resourceOwner, $accessToken);
 
         if ($this->config['oidcRevokeAccessTokenAfterLogin']) {
             $service->revokeToken($accessToken);
