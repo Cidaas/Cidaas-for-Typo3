@@ -95,6 +95,7 @@ class Login2Controller
         $_SESSION['oidc_state'] = $state;
         $_SESSION['oidc_login_url'] = GeneralUtility::getIndpEnv('REQUEST_URI');
         $_SESSION['oidc_authorization_url'] = $authorizationUrl;
+        $_SESSION['oidc_referer'] = GeneralUtility::getIndpEnv('HTTP_REFERER');
         unset($_SESSION['oidc_redirect_url']); // The redirect will be handled by this plugin
 
         HttpUtility::redirect($authorizationUrl);
@@ -102,8 +103,18 @@ class Login2Controller
 
     protected function performRedirectAfterLogin()
     {
-        $redirectUrl = $this->determineRedirectUrl();
-        HttpUtility::redirect($redirectUrl);
+         if (isset($this->pluginConfiguration['defaultRedirectPid'])) {
+            $defaultRedirectPid = $this->pluginConfiguration['defaultRedirectPid'];
+            if ((int)$defaultRedirectPid > 0) {
+                HttpUtility::redirect($this->cObj->typoLink_URL(['parameter' => $defaultRedirectPid]));
+            }
+        }
+
+        if (session_id() === '') {
+            session_start();
+        }
+        $referer = $_SESSION['oidc_referer'];
+        HttpUtility::redirect($referer);
     }
 
     protected function determineRedirectUrl()
@@ -155,7 +166,7 @@ class Login2Controller
             ->execute()
             ->fetch();
 
-            // .'&post_logout_redirect_uri=http://localhost/index.php?logintype=logout'
+        // .'&post_logout_redirect_uri=http://localhost/index.php?logintype=logout'
         //HttpUtility::redirect($logoutUrl);
         $token = $row['access_token'];
         $url = $this->settings['baseUrl_b'];

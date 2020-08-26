@@ -71,10 +71,10 @@ class LoginController
         if (is_array($pluginConfiguration)) {
             $this->pluginConfiguration = $pluginConfiguration;
         }
-
+        $redirect = GeneralUtility::getIndpEnv('HTTP_REFERER');
         if (GeneralUtility::_GP('logintype') == 'login') {
             // performRedirectAfterLogin stops flow by emitting a redirect
-            $this->performRedirectAfterLogin();
+            $this->performRedirectAfterLogin($redirect);
         }
 
         $this->performRedirectToLogin();
@@ -96,15 +96,26 @@ class LoginController
         $_SESSION['oidc_state'] = $state;
         $_SESSION['oidc_login_url'] = GeneralUtility::getIndpEnv('REQUEST_URI');
         $_SESSION['oidc_authorization_url'] = $authorizationUrl;
+        $_SESSION['oidc_referer'] = GeneralUtility::getIndpEnv('HTTP_REFERER');
         unset($_SESSION['oidc_redirect_url']); // The redirect will be handled by this plugin
-
         HttpUtility::redirect($authorizationUrl);
     }
 
-    protected function performRedirectAfterLogin()
+    protected function performRedirectAfterLogin($redirect)
     {
-        $redirectUrl = $this->determineRedirectUrl();
-        HttpUtility::redirect($redirectUrl);
+        //$redirectUrl = $this->determineRedirectUrl();
+        if (isset($this->pluginConfiguration['defaultRedirectPid'])) {
+            $defaultRedirectPid = $this->pluginConfiguration['defaultRedirectPid'];
+            if ((int)$defaultRedirectPid > 0) {
+                HttpUtility::redirect($this->cObj->typoLink_URL(['parameter' => $defaultRedirectPid]));
+            }
+        }
+
+        if (session_id() === '') {
+            session_start();
+        }
+        $referer = $_SESSION['oidc_referer'];
+        HttpUtility::redirect($referer);
     }
 
     protected function determineRedirectUrl()
@@ -120,7 +131,11 @@ class LoginController
             }
         }
 
-        return '/';
+        if (session_id() === '') {
+            session_start();
+        }
+        $referer = $_SESSION['oidc_referer'];
+        return $referer;
     }
 
     public function logout($_ = '', $pluginConfiguration)

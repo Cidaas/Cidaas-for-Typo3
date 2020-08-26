@@ -42,7 +42,7 @@ $EM_CONF[$_EXTKEY] = array (
   'author' => 'cidaas by Widas ID GmbH',
   'author_email' => 'developer@cidaas.de',
   'author_company' => 'Widas Concepts',
-  'version' => '1.0.8',
+  'version' => '1.0.9',
   'clearcacheonload' => false,
 );
 
