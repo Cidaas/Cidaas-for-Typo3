@@ -85,7 +85,7 @@ class AuthenticationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         if(!empty($_GET['client'])){
             $loginUrl .= '&client=2';
         }
-
+	setcookie("fe_typo_user", "", time()-3600);
         static::getLogger()->info('Redirecting to login URL', ['url' => $loginUrl]);
         $this->redirectToUri($loginUrl);
     }
