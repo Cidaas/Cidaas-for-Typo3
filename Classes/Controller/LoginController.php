@@ -174,8 +174,8 @@ class LoginController
             // .'&post_logout_redirect_uri=http://localhost/index.php?logintype=logout'
         //HttpUtility::redirect($logoutUrl);
         $token = $row['access_token'];
-        $url = $this->settings['baseUrl'];
-        $logoutUrl .= '?access_token_hint='.$token.'&post_logout_redirect_uri='.$url.'index.php?logintype=logout';
+        $url = $this->settings['logoutUrl'];
+        $logoutUrl .= '?access_token_hint='.$token.'&post_logout_redirect_uri='.$url.'?logintype=logout';
 
         HttpUtility::redirect($logoutUrl);
 

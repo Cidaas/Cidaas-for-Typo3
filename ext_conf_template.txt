@@ -25,23 +25,23 @@ oidcClientSecret =
 # cat=Client_A//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
 oidcClientScopes = openid email profile roles
 
-# cat=Client_A/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.baseUrl
-baseUrl = http://localhost/
-
-# cat=Client_A/links/2; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
+# cat=Client_A/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
 oidcEndpointAuthorize = https://nightlybuild.cidaas.de/authz-srv/authz
 
-# cat=Client_A/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
+# cat=Client_A/links/2; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
 oidcEndpointToken = https://nightlybuild.cidaas.de/token-srv/token
 
-# cat=Client_A/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
+# cat=Client_A/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
 oidcEndpointUserInfo = https://nightlybuild.cidaas.de/users-srv/userinfo
 
-# cat=Client_A/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
+# cat=Client_A/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
 oidcEndpointLogout = https://nightlybuild.cidaas.de/session/end_session
 
-# cat=Client_A/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
+# cat=Client_A/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
 oidcEndpointRevoke = https://nightlybuild.cidaas.de/token-srv/revoke
+
+# cat=Client_A/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.logoutUrl
+logoutUrl = http://localhost/
 
 # cat=Client_A/links/7; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcAuthorizeLanguageParameter
 oidcAuthorizeLanguageParameter = language
@@ -83,23 +83,23 @@ oidcClientSecret_b =
 # cat=Client_B//5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcClientScopes
 oidcClientScopes_b = openid email profile roles
 
-# cat=Client_B/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.baseUrl
-baseUrl_b = http://localhost/
-
-# cat=Client_B/links/2; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
+# cat=Client_B/links/1; type=text; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointAuthorize
 oidcEndpointAuthorize_b = https://nightlybuild.cidaas.de/authz-srv/authz
 
-# cat=Client_B/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
+# cat=Client_B/links/2; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointToken
 oidcEndpointToken_b = https://nightlybuild.cidaas.de/token-srv/token
 
-# cat=Client_B/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
+# cat=Client_B/links/3; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointUserInfo
 oidcEndpointUserInfo_b = https://nightlybuild.cidaas.de/users-srv/userinfo
 
-# cat=Client_B/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
+# cat=Client_B/links/4; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointLogout
 oidcEndpointLogout_b = https://nightlybuild.cidaas.de/session/end_session
 
-# cat=Client_B/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
+# cat=Client_B/links/5; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcEndpointRevoke
 oidcEndpointRevoke_b = https://nightlybuild.cidaas.de/token-srv/revoke
+
+# cat=Client_B/links/6; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.logoutUrl
+logoutUrl_b = http://localhost/
 
 # cat=Client_B/links/7; type=string; label=LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:settings.oidcAuthorizeLanguageParameter
 oidcAuthorizeLanguageParameter_b = language

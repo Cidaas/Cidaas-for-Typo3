@@ -39,9 +39,6 @@
 			<trans-unit id="settings.oidcAuthorizeLanguageParameter">
 				<source>Authorize request language parameter name</source>
 			</trans-unit>
-			<trans-unit id="settings.baseUrl">
-				<source>BaseUrl of the website</source>
-			</trans-unit>
 			<trans-unit id="settings.oidcEndpointAuthorize">
 				<source>Endpoint URI for authorization</source>
 			</trans-unit>
@@ -56,6 +53,9 @@
 			</trans-unit>
 			<trans-unit id="settings.oidcEndpointRevoke">
 				<source>Endpoint URI for revoking the token</source>
+			</trans-unit>
+			<trans-unit id="settings.logoutUrl">
+				<source>Url of the landing page after logout</source>
 			</trans-unit>
 			<trans-unit id="settings.oidcUseRequestPathAuthentication">
 				<source>Use Request Path Authentication: When ticked, this value will use Request Path Authentication instead of standard Password Grant.</source>
