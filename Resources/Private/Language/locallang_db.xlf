@@ -6,7 +6,9 @@
 			<trans-unit id="tt_content.oidc_login">
 				<source>Cidaas Login</source>
 			</trans-unit>
-
+			<trans-unit id="tt_content.oidc_logout">
+				<source>Cidaas Logout</source>
+			</trans-unit>
 			<trans-unit id="settings.enableFrontendAuthentication">
 				<source>Frontend Authentication: Enable OpenID Connect authentication for the frontend.</source>
 			</trans-unit>
@@ -46,6 +48,9 @@
 			<trans-unit id="settings.oidcEndpointRevoke">
 				<source>Endpoint URI for revoking the token</source>
 			</trans-unit>
+			<trans-unit id="settings.logoutUrl">
+				<source>Url of the landing page after Logout</source>
+			</trans-unit>
 			<trans-unit id="settings.oidcUseRequestPathAuthentication">
 				<source>Use Request Path Authentication: When ticked, this value will use Request Path Authentication instead of standard Password Grant.</source>
 			</trans-unit>
@@ -60,6 +65,9 @@
 			</trans-unit>
 			<trans-unit id="fe_users.tx_oidc">
 				<source>OpenID Connect Identifier</source>
+			</trans-unit>
+			<trans-unit id="fe_users.access_token">
+				<source>Cidaas Access Token</source>
 			</trans-unit>
 		</body>
 	</file>

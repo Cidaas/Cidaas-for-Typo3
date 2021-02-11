@@ -51,6 +51,8 @@ $boot = function ($_EXTKEY) {
             'Authentication' => 'connect'
         ]
     );
+    
+
 
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('felogin')) {
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['felogin']['postProcContent'][$_EXTKEY] = \Widas\Cidaas\Hooks\FeloginHook::class . '->postProcContent';
@@ -58,6 +60,7 @@ $boot = function ($_EXTKEY) {
 
     // Add typoscript for custom login plugin
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43('oidc', null, '_login');
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43('oidc', null, '_logout');
 
     // Require 3rd-party libraries, in case TYPO3 does not run in composer mode
     $pharFileName = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Libraries/league-oauth2-client.phar';

@@ -15,7 +15,6 @@
 namespace Widas\Cidaas\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * Class AuthenticationController
  *
@@ -75,14 +74,13 @@ class AuthenticationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             }
             static::getLogger()->warning('Bypassing CSRF attack mitigation protection according to the extension configuration');
         }
-
         $loginUrl = $_SESSION['oidc_login_url'];
         $loginUrl .= strpos($loginUrl, '?') !== false ? '&' : '?';
         $loginUrl .= 'logintype=login&tx_oidc[code]=' . $_GET['code'];
         if (!empty($_SESSION['oidc_redirect_url']) && strpos($loginUrl, 'redirect_url=') === false) {
             $loginUrl .= '&redirect_url=' . urlencode($_SESSION['oidc_redirect_url']);
-        }
-
+        }   
+        setcookie("fe_typo_user", "", time()-3600);
         static::getLogger()->info('Redirecting to login URL', ['url' => $loginUrl]);
         $this->redirectToUri($loginUrl);
     }
