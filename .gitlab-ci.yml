@@ -1,0 +1,72 @@
+variables:
+    MODULE : git@gitlab.widas.de:cidaas-public-devkits/cidaas-plugins/module-version.git
+    TEMPLATE_REPO: https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.widas.de/cidaas-management/cidaas-versioning-ci-templates.git
+    SCRIPTS_PATH: cidaas-versioning-ci-templates/scripts/
+
+
+get_prerequisites:
+    image: makocchi/alpine-git-curl-jq
+    stage: prepare
+    script:
+        - git clone ${TEMPLATE_REPO}
+    artifacts:
+        paths:
+            - ./${SCRIPTS_PATH}
+        expire_in: 1 hrs
+    only:
+        - master
+
+
+get_version:
+    image: nexus.widas.de:18443/cidaas-node-typescript:12.7.0-3.5.3
+    stage: prepare
+    script:
+        - apt-get update && apt-get install -y --no-install-recommends git-core ca-certificates
+        - npm install -g semantic-release @semantic-release/gitlab
+        - semantic-release
+        - echo "export PACKAGE_VERSION="$(git describe --abbrev=0 --tags)"" >> variables
+    artifacts:
+        paths:
+            - variables
+    only:
+        - master
+    
+
+
+update_module:
+    stage: module
+    image: python:3.7
+    before_script:
+        - source ./variables
+        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+        - eval  $(ssh-agent -s)
+        - echo  "$SSH_PRIVATE_KEY"  | tr  -d '\r'  | ssh-add - > /dev/null
+        - mkdir  -p ~/.ssh
+        - chmod  700 ~/.ssh
+        - ssh-keyscan gitlab.widas.de >> ~/.ssh/known_hosts
+        - chmod  644 ~/.ssh/known_hosts
+        - if [ -d "module-version" ]; then rm -Rf module-version; fi
+        - git config --global user.email $RELEASE_USER_EMAIL
+        - git config --global user.name $RELEASE_USER_NAME
+        - echo $MODULE_VERSION_PROJECT
+        - git clone $MODULE_VERSION_PROJECT
+        - cd module-version
+    script:
+        - git checkout development
+        - mkdir python_scripts
+        - mv ../${SCRIPTS_PATH}/module.py ./python_scripts/module.py
+        - python python_scripts/module.py $CI_PROJECT_NAME $PACKAGE_VERSION "update version of $CI_PROJECT_NAME to $PACKAGE_VERSION"
+        - rm -rf ./python_scripts
+        - git commit -am "update version of $CI_PROJECT_NAME to $PACKAGE_VERSION"
+        - git push
+    only:
+        - master
+    except:
+        variables:
+            - $CI_PROJECT_NAME =~/^*module-version*$/
+    when: manual
+
+stages:
+  - prepare  
+  - module
+
