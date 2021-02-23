@@ -64,7 +64,7 @@ update_module:
     except:
         variables:
             - $CI_PROJECT_NAME =~/^*module-version*$/
-    when: manual
+    
 
 stages:
   - prepare  
