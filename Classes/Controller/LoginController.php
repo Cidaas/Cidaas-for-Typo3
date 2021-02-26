@@ -47,11 +47,8 @@ class LoginController
 
     public function __construct()
     {
-        if (version_compare(TYPO3_version, '9.0', '<')) {
-            $this->settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cidaas']);
-        } else {
+        
             $this->settings = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cidaas'] ?? [];
-        }
     }
 
     /**

@@ -16,20 +16,24 @@
 namespace Widas\Cidaas\Service;
 
 use League\OAuth2\Client\Token\AccessToken;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
+use TYPO3\CMS\Core\Http\ServerRequestFactory;
+use TYPO3\CMS\Core\Routing\SiteMatcher;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\HttpUtility;
-use Widas\Cidaas\Service\OAuthService;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
-
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * OpenID Connect authentication service.
  */
-class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
+class AuthenticationService extends \TYPO3\CMS\Core\Authentication\AuthenticationService
 {
 
     /**
@@ -64,11 +68,8 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
      */
     public function __construct()
     {
-        if (version_compare(TYPO3_version, '9.0', '<')) {
-            $this->config = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cidaas']);
-        } else {
+       
             $this->config = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cidaas'] ?? [];
-        }
     }
 
     /**
@@ -300,7 +301,10 @@ foreach($array as $key=>$value) {
         }
 
         /** @var $objInstanceSaltedPW \TYPO3\CMS\Saltedpasswords\Salt\SaltInterface */
-        $objInstanceSaltedPW = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(null, TYPO3_MODE);
+        
+        $passwordHashFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
+         $objInstanceSaltedPW = $passwordHashFactory->getDefaultHashInstance(TYPO3_MODE);
+        
         $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$'), 0, 20);
         $hashedPassword = $objInstanceSaltedPW->getHashedPassword($password);
         $accessToken = $accessToken->jsonSerialize();
@@ -631,6 +635,8 @@ foreach($array as $key=>$value) {
 
         if ($table === 'fe_users') {
             $setup = $this->getTypoScriptSetup();
+           //$setup = $GLOBALS['TSFE']->tmpl->setup;
+
             if (!empty($setup['plugin.']['tx_oidc.']['mapping.'][$table . '.'])) {
                 $mapping = $setup['plugin.']['tx_oidc.']['mapping.'][$table . '.'];
             }
@@ -656,37 +662,30 @@ foreach($array as $key=>$value) {
             $GLOBALS['TCA'][$table] = include($file);
         }
 
-        /** @var \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository */
-        $pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
-        $pageRepository->init(false);
+    
 
-        /** @var \TYPO3\CMS\Core\TypoScript\TemplateService $templateService */
-        $templateService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\TemplateService::class);
-        if (version_compare(TYPO3_version, '9.0', '<')) {
-            $templateService->init();
-        }
-        $templateService->tt_track = false;
+        
+            /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
+            /** @var SiteMatcher $siteMatcher */
+        $siteMatcher = GeneralUtility::makeInstance(SiteMatcher::class);
+        $routeResult = $siteMatcher->matchRequest($request);
+        $site = $routeResult->getSite();
+        $pageArguments = $site->getRouter()->matchRequest($request, $routeResult);
+        $currentPage = $pageArguments->getPageId();
 
-        $currentPage = $GLOBALS['TSFE']->id;
-        if ($currentPage === null) {
-            // root page is not yet populated
-            $localTSFE = clone $GLOBALS['TSFE'];
-            if (version_compare(TYPO3_version, '9.5', '>=')) {
-                $localTSFE->fe_user = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
-            }
-            $localTSFE->determineId();
-            $currentPage = $localTSFE->id;
-        }
-        if (version_compare(TYPO3_version, '9.5', '>=')) {
-            $rootLine = GeneralUtility::makeInstance(RootlineUtility::class, (int)$currentPage)->get();
-        } else {
-            $rootLine = $pageRepository->getRootLine((int)$currentPage);
-        }
+        $frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
+        $localTSFE = GeneralUtility::makeInstance(TypoScriptFrontendController::class, null, $site, $routeResult->getLanguage(), $pageArguments, $frontendUser);
+
+            /** @var TemplateService $templateService */
+        $templateService = GeneralUtility::makeInstance(TemplateService::class, null, null, $localTSFE);
+
+        $rootLine = GeneralUtility::makeInstance(RootlineUtility::class, (int)$currentPage)->get();
         $templateService->start($rootLine);
-
         $setup = $templateService->setup;
         return $setup;
     }
+
 
     /**
      * Returns a logger.

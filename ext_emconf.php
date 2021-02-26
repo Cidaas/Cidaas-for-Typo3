@@ -18,8 +18,8 @@ $EM_CONF[$_EXTKEY] = array (
   array (
     'depends' => 
     array (
-      'typo3' => '8.7.0-9.5.99',
-      'php' => '7.0.0-7.3.99',
+      'typo3' => '10.0.0-10.4.99',
+      'php' => '7.0.0-7.4.99',
     ),
     'conflicts' => 
     array (
@@ -42,7 +42,7 @@ $EM_CONF[$_EXTKEY] = array (
   'author' => 'cidaas by Widas ID GmbH',
   'author_email' => 'developer@cidaas.de',
   'author_company' => 'cidaas by Widas ID GmbH',
-  'version' => '1.1.0',
+  'version' => '2.0.1',
   'clearcacheonload' => false,
 );
 
