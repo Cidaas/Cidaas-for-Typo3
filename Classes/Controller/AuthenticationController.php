@@ -36,11 +36,8 @@ class AuthenticationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      */
     public function initializeAction()
     {
-        if (version_compare(TYPO3_version, '9.0', '<')) {
-            $this->globalSettings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cidaas']);
-        } else {
+        
             $this->globalSettings = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cidaas'] ?? [];
-        }
     }
 
     /**

@@ -64,11 +64,8 @@ class AuthenticationService extends \TYPO3\CMS\Sv\AuthenticationService
      */
     public function __construct()
     {
-        if (version_compare(TYPO3_version, '9.0', '<')) {
-            $this->config = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cidaas']);
-        } else {
+        
             $this->config = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cidaas'] ?? [];
-        }
     }
 
     /**
@@ -720,34 +717,26 @@ foreach($array as $key=>$value) {
             $GLOBALS['TCA'][$table] = include($file);
         }
 
-        /** @var \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository */
-        $pageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
-        $pageRepository->init(false);
+    
 
-        /** @var \TYPO3\CMS\Core\TypoScript\TemplateService $templateService */
-        $templateService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\TemplateService::class);
-        if (version_compare(TYPO3_version, '9.0', '<')) {
-            $templateService->init();
-        }
-        $templateService->tt_track = false;
+        
+            /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? ServerRequestFactory::fromGlobals();
+            /** @var SiteMatcher $siteMatcher */
+        $siteMatcher = GeneralUtility::makeInstance(SiteMatcher::class);
+        $routeResult = $siteMatcher->matchRequest($request);
+        $site = $routeResult->getSite();
+        $pageArguments = $site->getRouter()->matchRequest($request, $routeResult);
+        $currentPage = $pageArguments->getPageId();
 
-        $currentPage = $GLOBALS['TSFE']->id;
-        if ($currentPage === null) {
-            // root page is not yet populated
-            $localTSFE = clone $GLOBALS['TSFE'];
-            if (version_compare(TYPO3_version, '9.5', '>=')) {
-                $localTSFE->fe_user = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
-            }
-            $localTSFE->determineId();
-            $currentPage = $localTSFE->id;
-        }
-        if (version_compare(TYPO3_version, '9.5', '>=')) {
-            $rootLine = GeneralUtility::makeInstance(RootlineUtility::class, (int)$currentPage)->get();
-        } else {
-            $rootLine = $pageRepository->getRootLine((int)$currentPage);
-        }
+        $frontendUser = GeneralUtility::makeInstance(FrontendUserAuthentication::class);
+        $localTSFE = GeneralUtility::makeInstance(TypoScriptFrontendController::class, null, $site, $routeResult->getLanguage(), $pageArguments, $frontendUser);
+
+            /** @var TemplateService $templateService */
+        $templateService = GeneralUtility::makeInstance(TemplateService::class, null, null, $localTSFE);
+
+        $rootLine = GeneralUtility::makeInstance(RootlineUtility::class, (int)$currentPage)->get();
         $templateService->start($rootLine);
-
         $setup = $templateService->setup;
         return $setup;
     }

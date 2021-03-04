@@ -8,7 +8,7 @@ defined('TYPO3_MODE') or die('Access denied');
         'oidc_login',
     ],
     'list_type',
-    'oidc'
+    'cidaas'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
@@ -17,7 +17,7 @@ defined('TYPO3_MODE') or die('Access denied');
         'oidc2_login',
     ],
     'list_type',
-    'oidc2'
+    'cidaas'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
@@ -26,7 +26,7 @@ defined('TYPO3_MODE') or die('Access denied');
         'oidc_logout',
     ],
     'list_type',
-    'oidc'
+    'cidaas'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
@@ -35,5 +35,5 @@ defined('TYPO3_MODE') or die('Access denied');
         'oidc2_logout',
     ],
     'list_type',
-    'oidc2'
+    'cidaas'
 );

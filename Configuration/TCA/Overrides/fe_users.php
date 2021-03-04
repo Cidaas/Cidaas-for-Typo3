@@ -1,11 +1,8 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-if (version_compare(TYPO3_version, '9.0', '<')) {
-    $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cidaas']);
-} else {
+
     $settings = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cidaas'] ?? [];
-}
 
 $tempColumns = [
     'tx_oidc' => [
