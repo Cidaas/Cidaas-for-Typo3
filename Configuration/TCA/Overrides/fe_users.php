@@ -29,8 +29,17 @@ $tempColumns = [
             'size' => 1000,
         ]
     ],
+    'refresh_token' => [
+        'exclude' => 1,
+        'label' => 'LLL:EXT:cidaas/Resources/Private/Language/locallang_db.xlf:fe_users.refresh_token',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+        ]
+    ]
 ];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'tx_oidc');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'access_token');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'refresh_token');

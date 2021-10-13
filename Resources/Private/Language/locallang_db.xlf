@@ -69,6 +69,9 @@
 			<trans-unit id="fe_users.access_token">
 				<source>Cidaas Access Token</source>
 			</trans-unit>
+			<trans-unit id="fe_users.refresh_token">
+				<source>Cidaas Refresh Token</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

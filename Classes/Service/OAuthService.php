@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use League\OAuth2\Client\Token\AccessToken;
 use TYPO3\CMS\Core\Utility\HttpUtility;
-
+use GuzzleHttp\Client;
 /**
  * Class OAuthService.
  */
@@ -106,6 +106,7 @@ class OAuthService
         }
         return $accessToken;
     }
+
 
     /**
      * Returns an AccessToken using request path authentication.
@@ -230,6 +231,7 @@ class OAuthService
         if (empty($serializedToken) || empty($options)) {
             // Invalid token
             return null;
+
         }
         $accessToken = new \League\OAuth2\Client\Token\AccessToken($options);
 

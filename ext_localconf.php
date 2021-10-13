@@ -66,9 +66,11 @@ $boot = function ($_EXTKEY) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43('oidc', null, '_logout');
 
     // Require 3rd-party libraries, in case TYPO3 does not run in composer mode
+    if (!defined('TYPO3_COMPOSER_MODE')) {
     $pharFileName = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Libraries/league-oauth2-client.phar';
     if (is_file($pharFileName)) {
         @include 'phar://' . $pharFileName . '/vendor/autoload.php';
+        }
     }
 };
 

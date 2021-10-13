@@ -4,6 +4,7 @@
 CREATE TABLE fe_users (
 	tx_oidc varchar(100) DEFAULT '' NOT NULL,
 	access_token varchar(1000) DEFAULT '' NOT NULL,
+	refresh_token varchar(100) DEFAULT '' NOT NULL,
 	KEY fk_oidc (tx_oidc)
 );
 
