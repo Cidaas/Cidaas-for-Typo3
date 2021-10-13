@@ -30,6 +30,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+
+use GuzzleHttp\Client;
 /**
  * OpenID Connect authentication service.
  */
@@ -115,6 +117,8 @@ class AuthenticationService extends \TYPO3\CMS\Core\Authentication\Authenticatio
         /** @var OAuthService $service */
         $service = GeneralUtility::makeInstance(OAuthService::class);
         $service->setSettings($this->config);
+
+
 
         // Try to get an access token using the authorization code grant
         try {
@@ -317,6 +321,7 @@ foreach($array as $key=>$value) {
                 'deleted' => 0,
                 'disable' => 0,
                 'access_token' => $accessToken['access_token'],
+                'refresh_token' => $accessToken['refresh_token']
             ]
         );
 
