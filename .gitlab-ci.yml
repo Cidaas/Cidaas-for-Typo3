@@ -74,16 +74,16 @@ code_quality_json:
   stage: test
   allow_failure: true
   variables:
-    CODE_QUALITY_IMAGE: "registry.gitlab.com/gitlab-org/ci-cd/codequality:latest"
+    CODE_QUALITY_IMAGE: "codeclimate/codeclimate:latest"
   script:
     - docker pull "$CODE_QUALITY_IMAGE"
     - docker run
-      --env SOURCE_CODE="$PWD"
-      --env CODECLIMATE_CODE="$PWD/app"
-      --volume /tmp/cc:/tmp/cc
-      --volume "$PWD":/code
-      --volume /var/run/docker.sock:/var/run/docker.sock
-      "$CODE_QUALITY_IMAGE" /code
+       --env SOURCE_CODE="$PWD"
+       --env CODECLIMATE_CODE="$PWD"
+       --volume "$PWD":/code
+       --volume /var/run/docker.sock:/var/run/docker.sock
+       --volume /tmp/cc:/tmp/cc
+       "$CODE_QUALITY_IMAGE" analyze -f json > gl-code-quality-report.json
   artifacts:
     reports:
       codequality: gl-code-quality-report.json
