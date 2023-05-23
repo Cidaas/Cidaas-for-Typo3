@@ -3,6 +3,10 @@ variables:
     TEMPLATE_REPO: https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.widas.de/cidaas-management/cidaas-versioning-ci-templates.git
     SCRIPTS_PATH: cidaas-versioning-ci-templates/scripts/
 
+stages:
+  - test
+  - prepare  
+  - module
 
 get_prerequisites:
     image: makocchi/alpine-git-curl-jq
@@ -64,9 +68,24 @@ update_module:
     except:
         variables:
             - $CI_PROJECT_NAME =~/^*module-version*$/
-    
 
-stages:
-  - prepare  
-  - module
-
+code_quality_json:
+  image: docker:git
+  stage: test
+  allow_failure: true
+  variables:
+    CODE_QUALITY_IMAGE: "codeclimate/codeclimate:latest"
+  script:
+    - docker pull "$CODE_QUALITY_IMAGE"
+    - docker run
+       --env SOURCE_CODE="$PWD"
+       --env CODECLIMATE_CODE="$PWD"
+       --volume "$PWD":/code
+       --volume /var/run/docker.sock:/var/run/docker.sock
+       --volume /tmp/cc:/tmp/cc
+       "$CODE_QUALITY_IMAGE" analyze -f json > gl-code-quality-report.json
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+    paths: [gl-code-quality-report.json]
+  dependencies: []
